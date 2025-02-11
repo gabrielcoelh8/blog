@@ -29,7 +29,7 @@ Uma fresta de luz amarela na parte de baixo. Estava receoso de bater na porta. O
 
 *Sangue doce.*
 
-*Ela mirou-o confusa. Ele mirou de volta, direto nos olhos, profundamente nos olhos. Os olhos verdes dela o penetraram como os raios dolorosos do sol, nunca sentira ambos, como sentia uma faca abrindo seus olhos como um contragolpe ao olhar. Os verdes de seus olhos pareciam um gigantesco gramado, vibravam, pulsavam em sincronia com seu próprio batimento cardíaco.* O gramado era vivo*. Escutava o som, o sangue doce a se espalhar por suas artérias em altas velocidades a cada bater. Pensou em beber de seu sangue, uma imagem vívida de seu tórax aberto o deixou tonto, seus órgãos pareciam doces, saborosos como o bolo no prato.*
+*Ela mirou-o confusa. Ele mirou de volta, direto nos olhos, profundamente nos olhos. Os olhos verdes dela o penetraram como os raios dolorosos do sol, nunca sentira ambos, como sentia uma faca abrindo seus olhos como um contragolpe ao olhar. Os verdes de seus olhos pareciam um gigantesco gramado, vibravam, pulsavam em sincronia com seu próprio batimento cardíaco.* O gramado era vivo. *Escutava o som, o sangue doce a se espalhar por suas artérias em altas velocidades a cada bater. Pensou em beber de seu sangue, uma imagem vívida de seu tórax aberto o deixou tonto, seus órgãos pareciam doces, saborosos como o bolo no prato.*
 
 *— Sente-se.*
 

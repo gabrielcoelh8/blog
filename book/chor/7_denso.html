@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html lang="ptbr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Denso</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="denso"><a class="header" href="#denso">Denso</a></h1>
+<p>Pela fresta fina do concreto rachado no teto, esverdeada de fungos e escurecida pela sujeira, via-se por resultado da chuva ácida que uma gota de líquido estranho de tom verde mais escuro se equilibrava prestes a cair em direção ao nariz do homem magricela e altamente trêmulo de frio, exausto mesmo dormindo há algum par de horas. Roncava uma canção de piedade bem baixo, o cantarolar de distração de um preso no corredor da morte contando os minutos para sua execução eletrizante. <em>O êxtase do fim</em>. Ele dormia de pé, as paredes de um metrô quadrado não permitiriam espreguiçar as pernas ou abrir ambos os braços. <em>Claustrofobia</em>. Respirava em desespero, ansiando por um oxigênio extra inexistente. Ansiando por algo além das paredes íngremes de concreto, canos e portas de metal muito pichadas por letras sem sentido ao abrir os olhos. Se ao menos ali houvesse uma janela para o céu, sabia que o céu agora era apenas nuvens negras e uma sombra de sol durante o dia, pelo menos era o que dizia Yang do quarto I24-L. Homem sorridente de cabelos lisos sujos, sempre com um conceito diferente para o mundo exterior. Mar, campos, árvores. Talvez tenha conseguido fugir, nunca mais o vira.</p>
+<p>A gota caiu sonoramente. Despertou assustado e deu de testa com o concreto, uma gota vermelha desceu por sua testa. <em>Vermelha</em>. Seu grunhido rompeu o silêncio de sua canção. <em>Dor</em>. Sua vista estava embaçada e agora suja de vermelho, dormir ali com pouco oxigênio o fazia acordar mais cansado e vendo sem noção de formas. <em>Sombras difusas</em>. Não lembrava nem sequer seu nome ou onde estava. Ou se estava realmente vivo. O compartimento lentamente tomou forma, e a agonia da consciência tomou-lhe conta em seguida. Tinha que sair dali imediatamente. Tinha que respirar. <em>Ar</em>. Ar, precisava de ar. <em>Sufocante</em>. <em>Insuportável</em>.</p>
+<p><em>Socorro</em>!</p>
+<p>Abriu a porta e se jogou no corredor além da soleira. Caiu de antebraços e arfou profundamente o ar vindo das tubulações abaixo dos pisos de grade de metal, sentia-se no limite de um desmaio, as vistas escurecidas. Tateou o bolso de sua calça escura, um quadrado macio estava em seu fundo embalado em papel marrom. Tremulando desembalou-o direto em sua boca aberta, mastigou a carne por breves momentos de sabor horrível, amargo e cru. Engoliu sem vontade.</p>
+<p>Olhou em volta quando seus sentidos normalizaram. Várias portas de metal sujas, vezes por manchas de sangue escuro, vezes por minimalistas pichações simbólicas de tinta preta, se espalhavam pelo corredor. Cada compartimento de um metro quadrado tinha sua identificação grifada na porta em branco, iluminando-se com uma lâmpada redonda de luz azul fantasmagórica no centro-superior, algumas piscando em intervalos regulares, outras fracas pela sujeira escura. A luz do sol não chegava ali. Yang lhe falara do sol, mas não conseguia imaginar sua forma e intensidade. Ou seu calor. Só conhecia o frio.</p>
+<p>Em paralelo, havia ao outro lado um corredor idêntico separado do atual por um abismo de alguns metros, com corrimão de metal enferrujado para se apoiar e não cair andares abaixo em direção ao desconhecido. Embora, ainda acontecesse. A cada trinta compartimentos havia uma escada vertical circular de duas direções, para cima e para baixo, que rangia assustadoramente ao se usar como o grito de uma mulher sendo esfaqueada. <em>Percebeu, subiu mais andares do que deveria, desceu alguns</em>. Até hoje ele não sabia exatamente a extensão do lugar. Através da grade do piso e teto era possível ver andares iluminados acima e abaixo e pessoas caminhando, mas não o fim ou o começo de tudo. Talvez fosse infinito como o paradoxo do grande hotel de Hilbert. Era como ele mesmo conceituava aquilo.</p>
+<p>Arrastava-se, como se não quisesse mesmo ir a lugar algum. Ao cruzar com outras pessoas caminhando pelo corredor percebia o mesmo olhar escuro de desesperança rastejante, então evitava olhar nos rostos. Todos eram cansados demais para pensar além dos corredores, suas mentes também estavam presas em um espaço apertado claustrofóbico.</p>
+<p>Socorro!</p>
+<p>Ainda lembrava onde ficava o quarto de Yang, precisava ouvir esperanças. Precisava de uma fuga do absurdo. Da vela no fim do túnel do destino, sua luz amarela fraca quase se apagando com a brisa da racionalidade humana. Que covardia precisar de uma <em>ilusão</em> (vela) ao invés de olhar diretamente nos <em>olhos do real</em> (escuridão). Nos olhos de tom azul mortal vidrados que nunca piscam. Abertos juntos com a consciência do primeiro humano, que azar ele ter feito os olhos se abrirem. A ignorância era tão quente antes. <em>Que frio</em>.</p>
+<p>Uma fresta de luz amarela na parte de baixo. Estava receoso de bater na porta. O símbolo de um sol sorridente em tinta branca, era isso que Yang dizia ser o calor. O corredor estava desértico, as portas vizinhas tinham suas lâmpadas sujas de poeira escura, logo a maior fonte de luz do corredor vinha da fresta da porta. <em>Da vela</em>. Tomou coragem e tentou abrir a porta sem bater. <em>Ela</em> abriu e a luz o sugou.</p>
+<p><em>O sol é laranja se olhar com cuidado, amarelo se olhar com medo, era o que Yang dizia. Mas para ele era de tom branco, descobriu odiar a luz, odiar o calor. Odiava sentir seus pés descalços sobre a grama molhada após a chuva rápida que teve naquela tarde. Pinica o centro do pé esquerdo, faz cócegas nos dedos. Mas ele não andaria de chinelo sobre ele, o danificando, não é esse tipo de gente. Para ele a grama pode ser viva, cada pequena grama tem uma faísca de consciência, que só tem força suficiente em conjunto, um grande conjunto como um campo de futebol deve até mesmo possuir sentimentos e medos. Do que um gramado teme senão sua destruição por pés maldosos. Não era maldoso, nunca machucara nada.</em></p>
+<p><em>Os rostos sempre são algo que ele não olha se não é atraído por alguma coisa. O lugar estava cheio de rostos, diferentes dos rostos dos corredores, estavam sentados em lençóis sobre o gramado, deitados, mirando o céu azul sem nuvens, ou mesmo, abaixo da grande árvore de ar úmido e refrescante. Caminhou sem direção, não sabia onde estava ou como teria parado ali, talvez não quisesse sentar e chamar a atenção por isso. Talvez alguma coisa o empurrasse contra sua vontade em direção a alguma coisa, mãos invisíveis controladoras e, talvez, maldosas. Sempre desejou que o tratassem como tratava o gramado, mas algumas vezes, essas mãos não o faziam. Esperava que em um dia de noite enluarada elas se arrastem até seu pescoço e se fechem com força.</em></p>
+<p><em>Atração.</em></p>
+<p><em>No centro exato do jardim, um elegante pedaço de bolo de morango com cobertura de chantili sobre um prato com rosas estampadas na porcelana branco-amarelada recebia um brilhoso garfo de prata, trêmulo, um triângulo perfeito subiu do prato até os lábios secos e pequenos dela. Molharam-se pelo líquido vermelho de morango que escorreu pelos cantos de sua boca semelhante a sangue.</em></p>
+<p><em>Sangue doce.</em></p>
+<p><em>Ela mirou-o confusa. Ele mirou de volta, direto nos olhos, profundamente nos olhos. Os olhos verdes dela o penetraram como os raios dolorosos do sol, nunca sentira ambos, como sentia uma faca abrindo seus olhos como um contragolpe ao olhar. Os verdes de seus olhos pareciam um gigantesco gramado, vibravam, pulsavam em sincronia com seu próprio batimento cardíaco.</em> O gramado era vivo. <em>Escutava o som, o sangue doce a se espalhar por suas artérias em altas velocidades a cada bater. Pensou em beber de seu sangue, uma imagem vívida de seu tórax aberto o deixou tonto, seus órgãos pareciam doces, saborosos como o bolo no prato.</em></p>
+<p><em>— Sente-se.</em></p>
+<p><em>A voz aguda dela o acordou e se sentou sem questionar. O lençol de piquenique tinha dois espaços, como se ela já esperasse alguém. O relógio repete o mesmo número seis repetidamente, estava no canto do lençol xadrez. Os ponteiros tentavam passar do número, mas algo os parava como dedos invisíveis. Daquela mão. Maldita mão.</em></p>
+<p><em>— Estava… me esperando?</em></p>
+<p><em>Ela não respondeu, mirava direto no pedaço restante de bolo, seus olhos vidrados. Com o garfo, ela equilibrou-o e levantou em direção ao lábios dele, parecia sugar o ar de todo o ambiente e direcioná-lo na ponta do garfo com o movimento que fez com a mão direita, com suas folhas farfalhando com o vento as árvores apontavam em direção ao seu lábios, assim como o dedo indicador dela que apoiava o garfo. Sentiu o frio da prata e sabor de ferro do recheio do bolo. Tinha gosto de sangue, afinal, como lamber uma faca ensanguentada pós-sacrifício. Ela tinha um sorriso de lábios mordidos olhando-o fixamente mastigar.</em></p>
+<p><em>Viu os vultos das pessoas sentadas cruzarem pelos cantos de seus olhos e um vulto ainda maior roubou de assalto as cores do céu, como o cair de um manto maldito, agora era cinza e morto, o sol uma luz branca pálida. Formaram um círculo a sua volta, olhavam diretamente pro prato vazio, sussurrando a mesma oração. Terminara de mastigar e ia engolir timidamente, não gostava de ser visto comendo. Mas ela saltou sobre ele, o jogando contra a grama e se posicionando sobre ele. Aproximou o rosto com uma expressão vazia, os olhos ainda vidrados, até os lábios se encostarem e se bagunçarem em um beijo torto, de certa forma sensual.</em></p>
+<p><em>Mordida. Sentiu-se preso, quatro pessoas seguravam seus membros nos pulsos contra a grama. Mãos. Não poderia fugir. Mordida. Sangue jorrou por seu pescoço, não todo o sangue. Sentiu os dentes dela penetrarem seu lábio superior com força, a dor veio e ouviu a engolir sem mastigar. Ouviu a sugar. Ela engolira sua dor, seu sangue, sua carne e saliva. Gritou violentamente, mas o som foi abafado pelas bochechas dela. Vomitou o que acabara de comer, não foi desperdiçado, no entanto. Ela engoliu. Mordida. Não é mais considerado um beijo se um dos apaixonados não tem seus lábios. Não tem como gritar sem língua. Dentes afiados como facas de prata. Os vultos vieram com garfos e facas de prata para o banquete, cada um cortou um cubo perfeito de carne e ossos. A luz do sol aumentava a cada cubo, não se via mais a forma das árvores.</em></p>
+<p>— Ele ia nesse quarto vazio conversar sozinho toda semana, mas como morreu?</p>
+<p>— O ambiente estava preenchido com gás tóxico gradativamente mais forte, criando alucinações e insanidades cada vez mais intensas. Chamamos mortes assim de <em>morrer de amor —</em> Observavam de longe, bem vestidos.</p>
+<p>Um cubículo de número I24-L acumulava muitos famintos se empurrando e gritando, se arranhando como animais. Com facas sujas faziam cubos para si mesmos e logo engoliam, mas não teria para todos. O piso se cobria de sangue negro mais e mais, gritavam nomes sujos. Não teria para todos. Alguém foi empurrado do corredor em direção ao abismo para diminuir a concorrência, outro teve a mesma ideia. Era uma chuva de sangue. Primeira em anos.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chor/6_construcao.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chor/8_borboletas.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chor/6_construcao.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chor/8_borboletas.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

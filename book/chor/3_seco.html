@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="ptbr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Seco</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="seco"><a class="header" href="#seco">Seco</a></h1>
+<p>Os lençóis brancos e coberta fina de mesma cor enrolados ao seu corpo formavam simbolicamente um casulo, abaixo o colchão velho nu sobre a cama metálica simples. Como uma lagarta na sua fase de morte temporária, estava afundado nas profundezas da escuridão da inconsciência, mas não ficava muito tempo nesse processo. O normal para isso é oito horas, mas tão pouco ficou duas nesse estado. Odiava esse estado, como odiava qualquer estado do seu corpo, odiava ter um corpo. Odiava existir também. Mas, na verdade, não odiava nada. Isso exigiria sentir alguma coisa.</p>
+<p>Nesses momentos sua mente parecia mais agitada e bagunçada que o normal, seus sonhos não se detinham em uma linha, não faziam sentido, eram pura bagunça de cores, formas e sentimentos fortes. Tudo que ele geralmente evitava. Evitar era seu hábito natural. Não tinha escapatória, talvez onde achava estar salvo, afinal não estava. A confusão o fez gritar as tripas na transição da inconsciência para a consciência. Se viu ensopado de suor, enrolado sufocantemente aos lençóis e cobertor, deslizou trêmulo para fora do casulo, se tornara agora em uma borboleta preta de aparência anêmica com asas magras, sem energia para alçar voo pelos céus. Mas o que fazem as borboletas durante a madrugada escura e fria das três da manhã. Dormiu por volta das uma depois de lutar contra os próprios pensamentos por horas, mas gostava de lutar contra si mesmo internamente.</p>
+<p>— Eu… — Disse sozinho. A rua asfaltada lá embaixo, com suas poças escuras causadas pela chuva que ocorreu na noite, estava vazia, pelo menos na visão limitada que a janela de seu quarto no segundo andar dava, as árvores do seu jardim escuras também tampava a visão, parecia quase uma metáfora. — Por que ainda tentar? Por quê, por quê? Por qual motivo? — Disse sozinho.</p>
+<p>As asas negras mexeram-se muito pouco em toda sua descida pelas escadas e passos até a porta de entrada. Ao se refrescar no ar gélido noturno, penetrante e trincante como água, suas asas encolheram de abrupto e se dissiparam em suas costas em um som seco, como se nunca tivessem existido. Tremia mais do que antes, em uma mescla do habitual medo com o frio de nove graus. Deslizou do bolso um maço de cigarros que tinha apenas metade de um cigarro no seu fundo, sacudiu-o na sua palma aberta e com a proteção delas deu vida a ponta daquilo com seu isqueiro velho e enferrujado. Não ligou o isqueiro por mais do que uns milésimos de segundo necessários. Iria continuar usando aquele até parar de funcionar completamente. Para completar aquele era o último cigarro e estava pela metade, tinha economizado para durar um mês com um maço apenas, meio cigarro por vez. Logo, tinha que equilibrar sua agonia com pequenos lapsos de prazer do vício em intervalos calculados.</p>
+<p>Sugava o cigarro com ferocidade, apreciando o pequeno momento de prazer barato. Ainda se sentia dentro do casulo, talvez nunca sairá. Pensou que diferente das borboletas comuns que não se demoram muito no estágio de casulo e se libertam para o mundo exterior sem qualquer medo, ele era uma especial que nunca sairia. Não somente, era do tipo que se especializam no casulo, sabendo todas suas medidas, cores e cheiros, também especialista na escuridão do casulo. Especialmente no último. O jardim parecia vazio, fez questão de ficar sobre a sombra de uma das árvores para que caso em alguma hipótese longínqua alguém passasse pela rua, não o visse, somente haveria a ponta acesa do cigarro suspensa por uma sombra na escuridão. É como gostaria que pensassem nele.</p>
+<p>Afinal talvez não fosse o único com esse pensamento, um pouco mais ao lado, parada em frente a uma de suas janelas alguém se mantinha paralisada, como uma estátua de cera. Seu coração explodiu, sentiu sua visão lentamente escurecer e voltar em repetição. Não tinha forças para gritar ou mesmo tentar expulsar aquela mulher de seu jardim. Tudo que fez foi ficar encarando-a de olhos vidrados, assim como ela também fazia com o vidro da sua janela da sala de estar, embora sua franja alinhada impedisse de ver seus olhos vidrados, dava-se apenas para comtemplar seus cabelos negros reluzentes em excesso que flutuavam de um lado ao outro ao ritmo calmo da brisa noturna. Interessante como o medo impede o agir, mesmo em situações em que o agir seria imprescindível, assim, em contraste com a brisa calma, as brisas internas explodiam dentro dele como pistões. Mais fácil do que encarar o medo de frente seria apagar tudo, ou tentar apagar. Mas o medo não estava permitindo apagar, o mais próximo de apagar seria embaçar, desfocar. Então a realidade se cobriu por um efeito esfumaçado, desfocado e longe, provocado por sua consciência como forma de defesa desesperada. Mas ela continuava lá. Ela.</p>
+<p>A histeria continuou até uma gota pintar uma das gramas verde escuras com vermelho igualmente escuro, o jardim era muito pouco iluminado, pois a única lâmpada de sua casa estava em seu quarto, em posição estratégica para iluminar o máximo dos outros cômodos possível. Tudo que restava eram os reflexos fracos dos postes e fiapos de luz de seu quarto, fracamente completados pela luz fantasmática da lua. Não soube distinguir do que era composto aquele líquido e nem de onde tinha vindo, não poderia ser dos céus. O enigma desviou por momento sua atenção do medo que a mulher representava. Mais gotas pousaram sobre o jardim, formando uma chuva escura que caia e deslizava sobre o corpo da mulher, pintando-a de vermelho escuro pouco a pouco. O mesmo aconteceu com cada grama, folha, parede, telha e objeto do jardim, exceto ao que estava sobre a esfera da sombra da árvore, de onde ele observava o redor de forma apática. Uma bela visão, pensou. O que causou medo há pouco, tornou-se belo.</p>
+<p>Quando a última gota caiu, o ar pareceu mais seco. A respiração ficou mais rarefeita e fria. Uma das gramas começou a secar como o ar lentamente e, em segundos, se desfez. Em cascata, as vizinhas começaram a sofrer o mesmo processo em uma dança de decomposição, deixando para trás somente um espaço escuro que sequer parecia possuir terra. O rastro de secura se espalhou até também dissolver a mulher como se a tivessem mergulhado em ácido invisível, entretanto ela sequer se moveu durante sua desintegração lenta. O mesmo então ocorreu com as paredes e janelas externas de sua casa, sendo agora possível ver o interior, mal-mobiliado e pobre lentamente se desfazendo em poeira. Sentiu-se invadido e exposto, mesmo que sendo só ele a presenciar o evento. Logo a casa desapareceu, pouco a pouco tudo que estava sobrando era a escuridão vazia. Tudo que o sangue houvesse tocado sumira. Agora, era só ele e a escuridão. Por sorte, ele era uma lagarta especialista na escuridão.</p>
+<p>Nada. Parecia maior que os limites de sua casa e jardim. Estava maior. Estava se sentindo confortável com a falta, se acostumava com pouco com facilidade. Mas ali o nada tornara-se em tudo. Poderia facilmente viver sem nada, sendo nada, não precisando de nada. Mas como a inércia é sempre quebrada, uma linha azul cruzou pelo seu rosto, não era nada mais que uma linha como aquelas traçadas a lápis em um papel. Uma linha imaginária. A linha recebeu uma igual e, juntas, se concentraram em um ponto fixo do espaço, formando assim um símbolo semelhante a um acento circunflexo, brilhando como laser. Mais linhas surgiram, mas não eram azuis, mas sim, de uma cor mais escura que a própria escuridão que a lagarta era especialista. Percebeu então que não era tão especialista como esperava, sabia muito pouco até sobre o que achava saber muito.</p>
+<p>As linhas obscuras aumentaram ainda mais e mais, e mais, por conta desses pensamentos intrusivos. Os pensamentos. Eles e as linhas pulsavam como corações negros em forma de linhas confusas. Para fugir, tentou se concentrar nas linhas azuis brilhantes, que estavam incompletas, sozinhas, mas fixas. Logo, linhas sem cor brilharam por conveniência em azul, caminharam e se uniram com as já existentes para, por fim, tornarem-se em um pentágono flutuante, preenchido por nada além de bordas. Esse pentágono preencheu sua consciência, dava para senti-lo, ele exalava um sentimento intenso de melancolia através de seu azul, mas também estava completo, nada mais faltava. Ali, o conceito de cor havia forma de algo sensível. Ali, a cor poderia doer. Objetos não vivos e conceitos faziam isso de vez em quando com ele, como não conseguia se conectar emocionalmente com objetos vivos, essa amálgama de sentimentos soterrados por vezes se vinculavam ao que não deveriam. Já chorou por um copo de vidro azul cair e se espalhar pelo piso para lados aleatórios em tamanhos aleatórios, chorou por uma página que possuía cinco parágrafos de cinco linhas perfeitamente organizadas com palavras de tamanho iguais por linha, mesmo sem saber o conteúdo da forma.</p>
+<p>Os sentimentos causaram a interrupção, estava em sua cama ensopado de suor. Havia sido um sonho. Apenas um sonho. Um maldito sonho. Deslizou para o piso com um baque surdo em posição fetal, tremendo. Havia sentido demais, além do limite. Ele deslizou os olhos para a janela, ainda estava de noite, no relógio de pilha ao lado da cama constava três da manhã. Quando estava no banheiro com as mãos envoltas nas águas geladas da torneira da pia, já não lembrava do seu sonho. Jogou-as no rosto, estava evitando se olhar. Quando se olhou no espelho, seu rosto havia sido substituído por um pentágono sem cor, mais escuro que a escuridão, que se apoiava sobre seu pescoço magro. Aquilo estava incompleto. Isso não o assustou, embora não lembrasse da origem dessa alucinação. Ficou curioso sobre a origem daquilo, talvez fosse sua falta de sono, talvez sua falta de alimentação, talvez sua falta de afeto pessoal, talvez aquilo, talvez isso, talvez.</p>
+<p>Talvez precisasse de um banho demorado até a hora de seu serviço, não conseguiria dormir de novo e ao tocar em seu maço de cigarros percebeu que não havia mais nenhum. Não se lembrava de ter fumado. Preparou a banheira só com a quantidade essencial de água e sabão. Entrou primeiro com as pontas dos dedos do pé, receoso. Logo, todo seu corpo estava afundado, até mesmo sua nova cabeça nas águas sem cor e frias de sua banheira velha. Aquecer a água seria caro, assim como comprar uma banheira mais decente. Sequer cogitava. Tudo em sua casa era medíocre, até porque o mundo externo não o interessava muito, para que ter além do necessário de algo que não importa. O que importa, no fim?</p>
+<p>A água fria da banheira penetrou em seus nervos como agulhas congeladas, era revigorante. Dor era algo da qual gostava. Todos os habitantes do submundo são viciados em dor, é a única forma de sentir para eles. O único problema é que ele era hipersensível à dor, supersensível. Quem menos sente, mais sente. A escassez torna pouco em muito. Estava apreciando a dor com um sorriso quando ela passou, afinal seu corpo se acostumou com ela, fazendo-a não mais existir. Irônico.</p>
+<p>O teto com infiltrações negras era como uma pintura, uma gota negra pendia lá em cima, pronta para cair no abismo em direção a sua testa. Ao cair surdamente em sua testa, se espalhou e deslizou pelo rosto até a água cristalina da banheira, onde ela se multiplicou numerosamente. Como uma nuvem de fumaça, a escuridão da gota se espalhou por toda a banheira, ele não conseguia mais ver seu próprio corpo submergido. Era agora somente um pentágono flutuando sobre águas escuras.</p>
+<p>Sentia algo lá embaixo, mas não era seu corpo. Um cocuruto emergiu no meio exato da banheira, cabelos tão negros como as águas começaram a deslizar para cima até formar uma franja. A pele era branca, tão branca que quase refletia luz. Era Ela. Os olhos vidrados encarando-o sem dizer uma só palavra. Estava sozinho com ela. De baixo do pentágono estendeu a mão direita até o rosto dela e sentiu sua pele, estava fria. Tão fria quanto a morte. Gritou, mas seu grito era baixo e distorcido pela sua forma. Ela não se mexeu um centímetro enquanto ele se lançou de dentro da banheira como uma bala. A porta do banheiro bateu-se em um estrondo e ele se escondeu dentre os lençóis. Dentro do casulo.</p>
+<p>Ela bateu na porta por nove vezes seguidas, com intervalos iguais entre cada batida. Ele não atendeu, nunca atendia. Não deixava ninguém entrar dentro de sua privacidade, a única exceção foi com Ela. A maçaneta girou gemendo.</p>
+<p>— Saia e venha — exigiu uma voz feminina calma e sagrada.</p>
+<p>Ouviu gotejos, ela estava encharcada de água da banheira. O choque da transição entre a escuridão dos lençóis para a luz intensamente branca que exalava d’Ela quase cegou-o, seu vestido flutuava e parecia haver uma auréola por trás de sua cabeça. Novamente, sentiu na luz algo, seu coração esquentou como nunca, ela exclamava calor e umidade, como o sol. Pela primeira vez sua casa se iluminou completamente. As franjas negras dela cobriam seu rosto parcialmente. Era um rosto claríssimo de forma pentagonal. Esqueceu que já tivera medo e saiu. Talvez fosse a outra parte que faltava.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chor/2_perfeito.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chor/4_maos.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chor/2_perfeito.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chor/4_maos.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

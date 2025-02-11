@@ -1,0 +1,247 @@
+<!DOCTYPE HTML>
+<html lang="ptbr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mãos</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="mãos"><a class="header" href="#mãos">Mãos</a></h1>
+<p>Eu sentia aquela massa escarlate de tom quase rosa pulsar e se mexer tentando sair de sua caixa craniana como se tivesse vida própria, ela sabia que era minha obra-prima. Aquilo fazia parte do quadro agora, era minha pedra, minha cera, meu quadro em branco. Segurei o pincel com delicadeza, mas com precisão. Eu levo arte como um arquiteto levaria, desenho cada linha com precisão, cada parte da planta, cada quadrado e triângulo deve ser calculado. Não se pode apagar tinta, um erro significa ter que jogar fora o quadro todo. Meu movimento braçal lembrava os que um maestro comanda aos seus músicos, nossa música foi moldada em uma base de sentimentos intensos. No fim, é isso que importa, quero que sintam, pois eu sinto. Meu espetáculo tem um preço puro em vermelho. Portanto, minhas mãos se banharam em vermelho, mesmo por baixo das luvas brancas, esse vermelho nunca sai. Lágrimas desceram pela minha bochecha por entre a máscara azul e molharam o canto dos meus lábios arqueados em um sorriso bem aberto, que ninguém conseguia ver.</p>
+<p>Era uma obra de arte, eu mesmo não sabia descrever como eu fiz, só flutuou até a superfície vindo das profundezas indecifráveis e misteriosas da criação infinita. Meu coração explodia enquanto me curvava para receber a salva de palmas, orgulhoso de mim mesmo. Todos me aplaudiram em pé e gritaram meu nome, a maioria chorando, eu havia tocado seus corações com minha criação colorida. Na realidade, gênios não são reconhecidos, são, na verdade, odiados e tratados como descolados da realidade à beira do hospício, talvez seja justo. Os aplausos eram nada menos do que olhares avessos e vazios, estavam apreensivos. Eu mesmo me dou reconhecimento, não preciso que me aprovem.</p>
+<p>— Doutor, você fez o procedimento perfeitamente, tão perfeito que é quase não-humano. — Me disse uma das enfermeiras. — Mas ele já estava morto desde que sua caixa craniana foi exposta, já estava em estado terminal antes de chegar nessa sala — Ninguém interrompeu a cirurgia mesmo assim.</p>
+<p>— Consegue sentir?</p>
+<p>Acho que ninguém naquela sala além de mim conseguia sentir. Sentir, só eu sinto como eu sinto. Virei de ombros e continuei admirando o que eu havia feito, as horas de cirurgia deixaram meus braços trêmulos. Dor. Mãos vermelhas são como as mãos de Deus.</p>
+<p>— Doutor, temos que dar a notícia para os familiares, por acaso o senhor—</p>
+<p>— Ninguém além de mim consegue.</p>
+<p>Imagino que a imagem e semelhança entre Deus e Humanos se limitam somente às suas mãos. Nenhum outro ser vivo tem mãos como as nossas, conseguimos alcançar gigantescos níveis de precisão com elas, nossas mãos tem o potencial infinito para a perfeição da forma. Tudo é criado e destruído através delas. A ferramenta primordial, a mãe de tudo são as mãos. Deus deve ser um par de mãos primordialmente vermelhas, assim como as minhas. Sempre achei ter um significado em ser tão difícil desenhar uma mão, pois veja seu formato, não parece humano, são perfeitas, não merecemos.</p>
+<p>— O que seu marido fazia quando vivo?</p>
+<p>— Com essa frase você está me dizendo que ele morreu? — Me disse isso com expressão e tom vazios.</p>
+<p>— Sim, mas essa é uma pergunta importante.</p>
+<p>— Ele era maestro sinfônico. — A falta de tristeza externa sempre me impressiona, o rosto dela se mantinha fechado. Aquilo saiu do ordinário de gritos e soluços que minha notícia sempre causava.</p>
+<p>— Lembre-se dele assim, um artista impressionante, uma gigantesca perda.</p>
+<p>— Posso vê-lo?</p>
+<p>— Ora, não creio que seja uma boa ideia, senhora. — Fascinante, achei um semelhante. Como ela conseguiu me pedir isso com tanta calma e firmeza. — Lembre-se dele vivo e saudável.</p>
+<p>— Eu exijo, por favor, antes que ele seja maculado por produtos químicos.</p>
+<p>— Nesse caso, me siga.</p>
+<p>A luz do quarto estava meio apagada, sempre deixo-a assim como forma de luto antes de levarem o corpo. Os lençóis ainda tampavam seu rosto, seu crânio exposto. Aquilo era minha obra. Minhas mãos tinham produzido essa aproximação do divino. É claro que médicos fazem seu trabalho quase que inconscientemente, assim como o escritor não tem controle do que escreve. É como um estado de transe que desemboca em um êxtase religioso no final. Podemos sentir isso quando completamos o que nos foi destinado a fazer, esse sentimento é o que todos buscam a vida toda.</p>
+<p>— Por que tem flores ali, onde está seu cérebro? — A voz dela estava ligeiramente mais baixa e calma, contraditoriamente.</p>
+<p>— Isso sequer são flores, senhora. — É claro, nem todo mundo vê o mesmo quadro, não havia flor alguma ali. Mas ao mesmo tempo havia. Sabe-se que a origem dos sentimentos não é o coração.</p>
+<p>— Eu as vejo. — A voz dela estava falha. Até agora suas mãos estavam fechadas em punho ao lado do corpo, suas sobrancelhas arquearam e sua mão direita se fechou no lençol, tremulando. — Ele amava flores… — Foi o máximo de emoção que ela demonstrou na minha frente, mas eu sentia ela explodindo por dentro. Por isso ela mandava tantas flores quando ele estava internado aqui. Vejo isso como o mar, pessoas que expressam os sentimentos abertamente formam gigantescas e incontroláveis ondas que afogam. Por outro lado, há também águas calmas e frias, onde movimentos violentos explodem nas profundezas, mas tudo que surge na superfície são pequenas e controladas irregularidades.</p>
+<p>Meu único sonho é que sintam o que eu sinto. Se sentem o que eu sinto, o que eu sinto se intensifica, quase me devora por dentro. E foi o que aconteceu nesse dia numa sensação singular. Deixei-a observar o “buquê” pelo tempo que precisou, até sem sequer se despedir, simplesmente sumir na escuridão do corredor movendo as pernas bem rápido. É quase sadismo querer que sintam tanto quanto eu, mas arte é sadismo por definição, se você considerar causar sentimentos dolorosos de propósito como sádico. Isso me revela, consigo saber exatamente porque aquele homem se casou com ela. Alguém com sentimentos tão vastos como ele iria se atrair facilmente por alguém que sente tanto como ela, sente tanto que não consegue expressar qualquer coisa. O cérebro dele era diferente, consigo diferenciar depois de anos abrindo crânio atrás de crânio. A maioria é medíocre, tanto em sentimentos, quanto em complexidade de conexões neurais. Mas esse não era. Essa percepção que ganhei com os anos me deixou curioso por muito tempo, sentia algo coçar por baixo dos meus cabelos.</p>
+<p>— Abra meu crânio. — Meu colega me olhou em pânico.</p>
+<p>— Não posso, enlouqueceu?</p>
+<p>— Eu preciso ver, eu preciso ver. — Implorei como uma criança. — Por favor!</p>
+<p>Claro, nenhum dos meus colegas neurocirurgiões aceitou. Minha única alternativa foi me submeter em exames para obter uma imagem radiográfica do meu cérebro. Uma cópia da realidade sempre é uma cópia, uma sombra fantasmagórica, faltava alma naquela representação preto e branca, não senti nada vendo-a. Mostrei-a para minha esposa e ela guardou na sua gaveta de lembranças, como gosto de chamar. Lá tem até mesmo a rosa vermelha que dei-lhe no nosso primeiro encontro dez anos atrás, belos tempos românticos. Em semelhante àquele maestro, eu também escolhi alguém que sente profundamente, mas, em contraste com a não expressão quase completa em que estes sentimentos têm o fim neles mesmos, quem eu escolhi expele-os, mesmo causando dor. Imagino a gama de coisas que ela sente só de encostar na rosa morta sobre o fundo de madeira da gaveta. Os olhos grandes dela, pretos como a escuridão da noite, sempre se enchiam na minha presença, acho que discordo que a paixão tem fim. Ainda amo-a como no primeiro dia e ela se pudesse guardaria todo dia ao meu lado dentro da gaveta. Ela com certeza guarda na gaveta. Afinal essa gaveta impede que ela perca total noção de quem é, há anos suas memórias veem se apagando lentamente e virando sombras como a impressão em preto e branco do meu cérebro, talvez por isso ela quis guardá-la. Aquela gaveta mantinha a memória de mim viva nela.</p>
+<p>— Você parece muito… orgulhoso… — Disse ela com voz fraca e baixa, quase inaudível.</p>
+<p>— Eu sinto que estou evoluindo… não estou mais sentindo como se tudo que eu faço fosse horrível. Estou quase conseguindo…</p>
+<p>— Nada… que você tenha feito… pode ser horrível…</p>
+<p>— Você é a única que acredita em mim… calma, não se esforce muito…  — Vi brotar uma lágrima cristalina no seu olho direito, mas ela sorria feliz pelo que eu tinha dito.</p>
+<p>— Falar com… você não é… um esforço… — Ela parecia sentir dor a cada palavra, os remédios tinham dolorosos efeitos colaterais. Até mesmo as luzes doíam, por isso a janela se mantinha fechada e a luz do quarto era fraquíssima.</p>
+<p>— Não gosto que você sinta dor enquanto fala comigo, eu consigo sentir o que você quer que eu sinta pelo seu lindo olhar…</p>
+<p>Demos as mãos ao lado da cama, a mão dela ficava mais pálida a cada palavra. Tudo que fizemos do fim da tarde até o anoitecer foi manter um olhar fixo um no outro. Ela precisava passar por uma cirurgia com chance mínima de sucesso, é claro que não seria permitido que eu a operasse. Pode acreditar que já chorei de joelhos insistindo para que eu o pudesse. Ela me disse que só aceitaria se fosse eu, e não importa o quanto eu insista.</p>
+<p>— Esses remédios… façam parar de me dar… — A voz dela ficou rouca e muito cortante, como se fosse de gigantesco esforço falar naquele momento, suava como o vento de uma tempestade violentamente triste. — Me resta… pouco… vamos viver… o resto… juntos… — O olhar que ela me deu me impedia de negar. Ela só estava ali porque insistira, sentia tudo isso de dor porque eu pedi que sentisse.</p>
+<p>Os efeitos sumiram, ela não sentia dor. A luz voltou nela, a vida voltou a vibrar por baixo da sua pele. Em casa, eu deixava todas as luzes e as janelas fechadas como se fosse o quarto de hospital, queria sentir o mesmo que ela sentia quando estava lá sozinha. Mas agora, as sombras das paredes sumiram dando lugar a forte luz do sol jorrada pelas janelas abertas, ela ligou todas as luzes para que a casa ficasse o mais iluminada possível. Quando cheguei do trabalho, ela me esperava no corredor, uma coroa de flores sobre a cabeça, os cabelos pretos soltos esvoaçantes pelo vento que entrava pela janela no fim do corredor. O que eu via era uma musa brilhante, a luz do sol parecia irradiar de sua coroa. Seu sorriso branco era uma perdição. Ficamos nos olhando por um longo tempo até que seus olhos grandes tremularam e desviaram de mim, levando com eles o sorriso. E como o passar de um vulto, a luz do sol se apagou, alguém a roubou com um manto negro. A lâmpada do corredor chiou e piscou repetidamente, a expressão dela exprimia mais dor a cada piscar, até aquilo enfim queimar, ao mesmo tempo em que seus olhos sempre cheios se esvaziaram e ela decolou de lado na parede, com um baque surdo e doloroso.</p>
+<p>Estava tudo escuro.</p>
+<p>Tudo escuro.</p>
+<p>Escuro.</p>
+<p>Escuro.</p>
+<p>Eu não tinha todos os materiais necessários. Coloquei-a sentada sobre o sofá e me posicionei na cabeceira. Eu tinha uma lâmpada com tripé perfeita para iluminar durante a cirurgia. É o que ela desejava. Só eu poderia fazê-lo. Eu era o único. Primeiro cortei o cabelo na parte que eu abriria. Marquei com um canetão a área do crânio que eu abriria. É o básico do desenho. A primeira coisa que seu professor vai te ensinar é como esboçar e desenhar formas geométricas. Um bom esboço facilitará muito seu trabalho. Alguns desenham perfeitamente sem esboço, diria que são casos raros. Eu abri a gaveta de lembranças, a mais importante memória era a flor. Nós dois estávamos nervosos, se olhando timidamente por entre essa flor no meio da mesa de jantar, o restaurante estava barulhento e iluminado demais, mas o redor sumia e desfocava na presença um do outro. Foi nesse momento que percebemos. Mais fundo nessa gaveta está esse anel dourado. O gramado estava macio e levemente molhado quando pedi-a em casamento e o sol atravessou pelo seu olhar, preenchendo-o ainda mais. Para alguns artistas, o quadro nunca está pronto, tem-se que dar um basta e simplesmente parar na metade ou ele nunca dar-se-á por satisfeito com sua obra. Coloquei a coroa de volta com minhas mãos vermelhas, não usei luva.. Uma lágrima vermelha desceu pela sua bochecha. Ela não estava acordando, pensei que fosse acordar. A coroa lentamente ficava mais e mais vermelha. Ela me olhava fixamente ainda com a expressão de dor frisada pelo tempo, ela não se mexia. Ela não se mexia, não importava quantas horas se passassem. Talvez eu seja mesmo péssimo, eu sou patético, sou horrível. Óbvio que eu não ia conseguir, sou o pior dos seres vivos. Não consigo fazer nada. Não mereço nada. Eu não sou nada. Qualquer outro poderia ter salvado ela. Tudo que me resta é a gaveta na cômoda da minha cela, a coroa está lá dentro, chamo-a de gaveta da culpa. Eu sou o culpado, eu mereço estar preso aqui. Eu mereço sentir dor.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../chor/3_seco.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chor/5_triangulo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../chor/3_seco.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chor/5_triangulo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
