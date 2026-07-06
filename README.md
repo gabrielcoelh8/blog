@@ -2,7 +2,7 @@
 
 Site literário para o livro **Chor Sinfonie** — oito contos, cada um com uma cena
 animada em Three.js. Construído com Next.js 16 (App Router + Turbopack), exportado
-como site estático para o GitHub Pages.
+como site estático para o Cloudflare Pages.
 
 ## Desenvolvimento
 
@@ -24,17 +24,19 @@ npm run build    # gera o site estático em out/
   um `<Canvas>`; cada `scenes/*.tsx` exporta `Main` (capa/banner) e opcionalmente
   `Background`. As cenas são fragment shaders (veja `shaders/noise.ts`).
 
-## Deploy (GitHub Pages)
+## Deploy (Cloudflare Pages)
 
-O workflow `.github/workflows/deploy.yml` faz `npm ci && npm run build` e publica
-`out/` via GitHub Actions a cada push na `main`.
+O Cloudflare Pages builda e publica a cada push na `main`. Configuração em
+_Settings → Build_:
 
-**Passo manual, uma vez:** em _Settings → Pages → Build and deployment → Source_,
-selecione **GitHub Actions**.
+- **Framework preset:** Next.js (Static HTML Export) — _não_ o preset "Next.js"
+  normal, que roda o adapter OpenNext desnecessariamente.
+- **Build command:** `npm run build`
+- **Build output directory:** `out`
+- **Build cache:** ativado (acelera o `npm ci` entre deploys).
+- **Variável de ambiente:** `NODE_VERSION=22`
 
-O site é servido em `https://gabrielcoelh8.github.io/blog/` — por isso o
-`basePath: '/blog'` em produção (`next.config.ts`). Em `next dev` o basePath é
-vazio, então tudo roda em `/`.
+O site é servido na raiz do domínio, então não há `basePath`.
 
 ## Notas
 
