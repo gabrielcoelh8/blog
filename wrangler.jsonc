@@ -1,0 +1,11 @@
+{
+  // Static-assets-only Worker: serves the Next.js export from out/, no server code.
+  "name": "ecrits",
+  "compatibility_date": "2026-07-06",
+  "assets": {
+    "directory": "./out",
+    // Serve /chor/agua/ from chor/agua/index.html and drop trailing-slash mismatches.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
