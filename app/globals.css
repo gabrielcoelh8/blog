@@ -1,0 +1,89 @@
+:root {
+  --bg: #0a0a0a;
+  --text: #d8d3c8;
+  --muted: #777;
+  --border: #333;
+  --serif: "Times New Roman", Times, "Liberation Serif", serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+.site-main {
+  min-height: calc(100vh - 5rem);
+}
+
+/* ---- Prose (chapter / page body) ---- */
+
+.prose {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: var(--text);
+}
+
+.prose p {
+  margin: 0 0 1.4rem;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.prose a {
+  color: #cfcabd;
+  text-underline-offset: 3px;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border: 1px solid var(--border);
+}
+
+/* Classic-book drop cap on the first paragraph, blackletter font. */
+.prose > p:first-of-type::first-letter {
+  font-family: var(--font-fraktur), var(--serif);
+  float: left;
+  font-size: 4.4em;
+  line-height: 0.72;
+  padding: 0.02em 0.1em 0 0;
+  color: var(--dropcap, #e8e0d0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,49 @@
+.wrap {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 5rem;
+}
+
+.intro {
+  text-align: center;
+  margin: 2rem 0 3.5rem;
+}
+
+.book {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 2.6rem;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.4rem;
+  color: #f2efe8;
+}
+
+.sub {
+  font-variant: small-caps;
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.prefLink {
+  color: #cfcabd;
+  text-underline-offset: 3px;
+}
+
+/* Horizontal-feeling grid of square cards (Are.na spacing). Wraps on narrow
+   screens instead of forcing horizontal scroll. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.75rem;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    padding: 1.5rem 1.25rem 4rem;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+}
