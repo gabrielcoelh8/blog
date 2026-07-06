@@ -1,6 +1,6 @@
 {
   // Static-assets-only Worker: serves the Next.js export from out/, no server code.
-  "name": "ecrits",
+  "name": "blog",
   "compatibility_date": "2026-07-06",
   "assets": {
     "directory": "./out",
